@@ -19,30 +19,31 @@
                       | 
                       | 
                       | 
-  0x02c: 30f014000000 | Main:   irmovl ele1,%eax
-  0x032: a00f         |         pushl %eax      # ptr to linked list
+  0x02c:              | Main:   
+  0x02c: 30f214000000 | 	irmovl ele1,%edx
+  0x032: a02f         |         pushl %edx      # ptr to linked list
   0x034: 803a000000   |         call rsum_list
   0x039: 00           |         halt
                       | 
-  0x03a: a05f         | rsum_list:	pushl %ebp
-  0x03c: 2045         | 		rrmovl %esp, %ebp
-  0x03e: a01f         | 		pushl %ecx
-  0x040: 30f604000000 | 		irmovl $4, %esi
-  0x046: 30f000000000 | 		irmovl $0, %eax
-  0x04c: 502508000000 | 		mrmovl 8(%ebp), %edx 	# edx = ls
-  0x052: 6222         | 		andl %edx, %edx 	# if(!ls)
-  0x054: 736a000000   | 		je End
-  0x059: 501200000000 | 		mrmovl (%edx), %ecx	# Get *ls
-  0x05f: 6062         | 		addl %esi, %edx 	# ls = ls->next
-  0x061: a02f         | 		pushl %edx		# save current head
-  0x063: 803a000000   | 		call rsum_list
-  0x068: 6010         | 		addl %ecx, %eax		# val + rest
+  0x03a:              | rsum_list:	
+  0x03a: a05f         | 	pushl %ebp
+  0x03c: 2045         | 	rrmovl %esp, %ebp
+  0x03e: a01f         | 	pushl %ecx
+  0x040: 30f000000000 | 	irmovl $0, %eax
+  0x046: 502508000000 | 	mrmovl 8(%ebp), %edx 	# edx = ls
+  0x04c: 6222         | 	andl %edx, %edx 	# if(!ls)
+  0x04e: 736a000000   | 	je End
+  0x053: 501200000000 | 	mrmovl (%edx), %ecx	# Get *ls
+  0x059: 502204000000 | 	mrmovl 4(%edx), %edx 	# ls = ls->next
+  0x05f: a02f         | 	pushl %edx		# save current head
+  0x061: 803a000000   | 	call rsum_list
+  0x066: b02f         | 	popl %edx
+  0x068: 6010         | 	addl %ecx, %eax		# val + rest
                       | 
   0x06a:              | End:
-  0x06a: b02f         | 		popl %edx
-  0x06c: b01f         | 		popl %ecx
-  0x06e: b05f         | 		popl %ebp
-  0x070: 90           | 		ret
+  0x06a: b01f         | 	popl %ecx
+  0x06c: b05f         | 	popl %ebp
+  0x06e: 90           | 	ret
                       | 
   0x100:              | 	.pos 0x100
   0x100:              | Stack:	# The stack goes here

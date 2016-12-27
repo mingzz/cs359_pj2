@@ -19,30 +19,31 @@ ele3:
 
 
 
-Main:   irmovl ele1,%eax
-        pushl %eax      # ptr to linked list
+Main:   
+	irmovl ele1,%edx
+        pushl %edx      # ptr to linked list
         call rsum_list
         halt
 
-rsum_list:	pushl %ebp
-		rrmovl %esp, %ebp
-		pushl %ecx
-		irmovl $4, %esi
-		irmovl $0, %eax
-		mrmovl 8(%ebp), %edx 	# edx = ls
-		andl %edx, %edx 	# if(!ls)
-		je End
-		mrmovl (%edx), %ecx	# Get *ls
-		addl %esi, %edx 	# ls = ls->next
-		pushl %edx		# save current head
-		call rsum_list
-		addl %ecx, %eax		# val + rest
+rsum_list:	
+	pushl %ebp
+	rrmovl %esp, %ebp
+	pushl %ecx
+	irmovl $0, %eax
+	mrmovl 8(%ebp), %edx 	# edx = ls
+	andl %edx, %edx 	# if(!ls)
+	je End
+	mrmovl (%edx), %ecx	# Get *ls
+	mrmovl 4(%edx), %edx 	# ls = ls->next
+	pushl %edx		# save current head
+	call rsum_list
+	popl %edx
+	addl %ecx, %eax		# val + rest
 
 End:
-		popl %edx
-		popl %ecx
-		popl %ebp
-		ret
+	popl %ecx
+	popl %ebp
+	ret
 
 	.pos 0x100
 Stack:	# The stack goes here

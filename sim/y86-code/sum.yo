@@ -27,22 +27,21 @@
   0x03a:              | sum_list:	
   0x03a: a05f         | 	pushl %ebp	# Save %ebp
   0x03c: 2045         | 	rrmovl %esp, %ebp
-  0x03e: 30f604000000 | 	irmovl $4, %esi
-  0x044: 30f000000000 | 	irmovl $0, %eax		# int val = 0;
-  0x04a: 502508000000 | 	mrmovl 8(%ebp), %edx	# edx = ls
-  0x050: 6222         | 	andl %edx, %edx
-  0x052: 736c000000   | 	je End
-  0x057:              | Loop:	
-  0x057: 503200000000 | 	mrmovl (%edx), %ebx	# Get *ls
-  0x05d: 6030         | 	addl %ebx, %eax		# val += ls->val
-  0x05f: 502204000000 | 	mrmovl 4(%edx) , %edx		# ls = ls->next
-  0x065: 6222         | 	andl %edx, %edx 	# while(ls)
-  0x067: 7457000000   | 	jne Loop
+  0x03e: 30f000000000 | 	irmovl $0, %eax		# int val = 0;
+  0x044: 502508000000 | 	mrmovl 8(%ebp), %edx	# edx = ls
+  0x04a: 6222         | 	andl %edx, %edx
+  0x04c: 7366000000   | 	je End
+  0x051:              | Loop:	
+  0x051: 503200000000 | 	mrmovl (%edx), %ebx	# Get *ls
+  0x057: 6030         | 	addl %ebx, %eax		# val += ls->val
+  0x059: 502204000000 | 	mrmovl 4(%edx) , %edx		# ls = ls->next
+  0x05f: 6222         | 	andl %edx, %edx 	# while(ls)
+  0x061: 7451000000   | 	jne Loop
                       | 
-  0x06c:              | End:	
-  0x06c: 2054         | 	rrmovl %ebp, %esp 	# Restore %esp
-  0x06e: b05f         | 	popl %ebp 	# Restore %ebp
-  0x070: 90           | 	ret
+  0x066:              | End:	
+  0x066: 2054         | 	rrmovl %ebp, %esp 	# Restore %esp
+  0x068: b05f         | 	popl %ebp 	# Restore %ebp
+  0x06a: 90           | 	ret
                       | 
   0x100:              | 	.pos 0x100
   0x100:              | Stack:	# The stack goes here
