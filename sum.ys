@@ -10,13 +10,13 @@ init:	irmovl Stack, %esp  	# Set up Stack pointer
 ele1:
 	.long 0x00a
 	.long ele2
+ele2:
+	.long 0x0b0
+	.long ele3
 ele3:
 	.long 0xc00
 	.long 0
 
-ele2:
-	.long 0x0b0
-	.long ele3
 
 
 Main:	irmovl ele1,%eax
