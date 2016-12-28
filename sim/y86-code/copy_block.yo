@@ -1,0 +1,56 @@
+                      | # Execution begins at address 0
+  0x000:              |         .pos 0
+  0x000: 30f400010000 | init:   irmovl Stack, %esp      # Set up Stack pointer
+  0x006: 30f500010000 |         irmovl Stack, %ebp      # Set up base pointer
+  0x00c: 702c000000   |         jmp Main                # Execute main program
+                      | 
+                      | 
+  0x014:              | .align 4
+                      | # Source block
+  0x014:              | src:
+  0x014: 0a000000     | 	.long 0x00a
+  0x018: b0000000     | 	.long 0x0b0
+  0x01c: 000c0000     | 	.long 0xc00
+                      | # Destination block
+  0x020:              | dest:
+  0x020: 11010000     | 	.long 0x111
+  0x024: 22020000     | 	.long 0x222
+  0x028: 33030000     | 	.long 0x333
+                      | 
+  0x02c:              | Main:
+  0x02c: 30f214000000 |         irmovl src, %edx
+  0x032: a02f         |         pushl %edx      # ptr to src
+  0x034: 30f220000000 | 	irmovl dest, %edx
+  0x03a: a02f         | 	pushl %edx	# ptr to dest
+  0x03c: 30f203000000 | 	irmovl $3, %edx
+  0x042: a02f         | 	pushl %edx	# len
+  0x044: 804a000000   |         call copy_block 
+  0x049: 00           |         halt
+                      | 
+  0x04a:              | copy_block:
+  0x04a: a05f         | 	pushl %ebp
+  0x04c: 2045         | 	rrmovl %esp, %ebp
+  0x04e: 503508000000 | 	mrmovl 8(%ebp), %ebx	# Get len
+  0x054: 50150c000000 | 	mrmovl 12(%ebp), %ecx	# Get dest
+  0x05a: 502510000000 | 	mrmovl 16(%ebp), %edx	# Get src
+  0x060: 30f000000000 | 	irmovl $0, %eax		# result = 0
+  0x066: 6233         | 	andl %ebx, %ebx		# if len <= 0 then to End
+  0x068: 7194000000   | 	jle End
+                      | 		
+  0x06d:              | Loop:
+  0x06d: 506200000000 | 	mrmovl (%edx), %esi	# val = *src
+  0x073: c0f204000000 | 	iaddl $4, %edx		# src++
+  0x079: 406100000000 | 	rmmovl %esi, (%ecx)	# *dest = val
+  0x07f: c0f104000000 | 	iaddl $4, %ecx		# dest++
+  0x085: 6360         | 	xorl %esi, %eax		# result ^= val
+  0x087: c0f3ffffffff | 	iaddl $-1, %ebx		# len--
+  0x08d: 6233         | 	andl %ebx, %ebx		# if len != 0 then to Loop
+  0x08f: 746d000000   | 	jne Loop
+                      | 
+  0x094:              | End:
+  0x094: b05f         | 	popl %ebp
+  0x096: 90           | 	ret
+                      | 
+  0x100:              |         .pos 0x100
+  0x100:              | Stack:  # The stack goes here
+                      | 
