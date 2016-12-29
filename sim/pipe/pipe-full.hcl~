@@ -178,7 +178,7 @@ bool need_regids =
 
 # Does fetched instruction require a constant word?
 bool need_valC =
-	f_icode in { IIRMOVL, IRMMOVL, IMRMOVL, IJXX, ICALL, IIADDL};
+	f_icode in { IIRMOVL, IRMMOVL, IMRMOVL, IJXX, ICALL, IIADDL };
 
 # Predict next value of PC
 int f_predPC = [
