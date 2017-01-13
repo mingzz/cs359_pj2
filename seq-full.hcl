@@ -1,3 +1,5 @@
+# Leader's Name: Yiming Zhang
+# Student ID: 5140219368
 #/* $begin seq-all-hcl */
 ####################################################################
 #  HCL Description of Control for Single Cycle Y86 Processor SEQ   #

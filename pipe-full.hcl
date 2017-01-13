@@ -1,3 +1,5 @@
+# Leader's Name: Yiming Zhang
+# Student ID: 5140219368
 #/* $begin pipe-all-hcl */
 ####################################################################
 #    HCL Description of Control for Pipelined Y86 Processor        #

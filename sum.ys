@@ -1,3 +1,5 @@
+# Leader's Name: Yiming Zhang
+# Student ID: 5140219368
 # Execution begins at address 0
 	.pos 0
 init:	irmovl Stack, %esp  	# Set up Stack pointer
