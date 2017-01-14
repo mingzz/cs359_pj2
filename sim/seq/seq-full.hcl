@@ -1,3 +1,5 @@
+# Leader's Name: Yiming Zhang
+# Student ID: 5140219368
 #/* $begin seq-all-hcl */
 ####################################################################
 #  HCL Description of Control for Single Cycle Y86 Processor SEQ   #
@@ -133,8 +135,7 @@ int srcA = [
 ## What register should be used as the B source?
 int srcB = [
 	icode in { IOPL, IRMMOVL, IMRMOVL, IIADDL  } : rB;
-	icode in { IPUSHL, IPOPL, ICALL, IRET } : RESP;
-	icode in { ILEAVE } : REBP;
+	icode in { IPUSHL, IPOPL, ICALL, IRET, ILEAVE} : RESP;
 	1 : RNONE;  # Don't need register
 ];
 
@@ -167,8 +168,9 @@ int aluA = [
 ## Select input B to ALU
 int aluB = [
 	icode in { IRMMOVL, IMRMOVL, IOPL, ICALL, 
-		      IPUSHL, IRET, IPOPL, IIADDL, ILEAVE } : valB;
+		      IPUSHL, IRET, IPOPL, IIADDL } : valB;
 	icode in { IRRMOVL, IIRMOVL } : 0;
+	icode in { ILEAVE } : valA;
 	# Other instructions don't need ALU
 ];
 

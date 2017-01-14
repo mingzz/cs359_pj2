@@ -1,13 +1,12 @@
-# Leader's Name: Yiming Zhang
-# Student ID: 5140219368
 #/* $begin ncopy-ys */
 ##################################################################
 # ncopy.ys - Copy a src block of len ints to dst.
 # Return the number of positive ints (>0) contained in src.
 #
-# Include your name and ID here.
+# Leader's Name: Yiming Zhang
+# Student ID: 5140219368
 #
-# Describe how and why you modified the baseline code.
+# Our modification is based on eliminating RAW hazard, Loop Unrolling, and instruction integration.
 #
 ##################################################################
 # Do not modify this portion

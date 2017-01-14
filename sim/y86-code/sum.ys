@@ -1,9 +1,11 @@
+# Leader's Name: Yiming Zhang
+# Student ID: 5140219368
 # Execution begins at address 0
 	.pos 0
-init:	irmovl Stack, %esp  	# Set up Stack pointer
-	irmovl Stack, %ebp  	# Set up base pointer
-	jmp Main		# Execute main program
-
+init:	
+	irmovl Stack, %esp  		# Set up Stack pointer
+	irmovl Stack, %ebp  		# Set up base pointer
+	jmp Main					# Execute main program
 
 # sample linked list
 .align 4
@@ -11,15 +13,15 @@ ele1:
 	.long 0x00a
 	.long ele2
 ele2:
-        .long 0x0b0
-        .long ele3
+    .long 0x0b0
+	.long ele3
 ele3:
 	.long 0xc00
 	.long 0
 
 Main:	
 	irmovl ele1,%edx
-	pushl %edx	# ptr to linked list
+	pushl %edx					# ptr to linked list
 	call sum_list	
 	halt
 
@@ -27,20 +29,20 @@ Main:
 sum_list:	
 	pushl %ebp	# Save %ebp
 	rrmovl %esp, %ebp
-	irmovl $0, %eax		# int val = 0;
-	mrmovl 8(%ebp), %edx	# edx = ls
+	irmovl $0, %eax				# int val = 0;
+	mrmovl 8(%ebp), %edx		# edx = ls
 	andl %edx, %edx
 	je End
 Loop:	
-	mrmovl (%edx), %ebx	# Get *ls
-	addl %ebx, %eax		# val += ls->val
+	mrmovl (%edx), %ebx			# Get *ls
+	addl %ebx, %eax				# val += ls->val
 	mrmovl 4(%edx) , %edx		# ls = ls->next
-	andl %edx, %edx 	# while(ls)
+	andl %edx, %edx 			# while(ls)
 	jne Loop
 
 End:	
-	rrmovl %ebp, %esp 	# Restore %esp
-	popl %ebp 	# Restore %ebp
+	rrmovl %ebp, %esp 			# Restore %esp
+	popl %ebp 					# Restore %ebp
 	ret
 
 	.pos 0x100

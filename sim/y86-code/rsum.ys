@@ -1,29 +1,32 @@
+# Leader's Name: Yiming Zhang
+# Student ID: 5140219368
 # Execution begins at address 0
-        .pos 0
-init:   irmovl Stack, %esp      # Set up Stack pointer
-        irmovl Stack, %ebp      # Set up base pointer
-        jmp Main                # Execute main program
+	.pos 0
+init:   
+	irmovl Stack, %esp      # Set up Stack pointer
+	irmovl Stack, %ebp      # Set up base pointer
+	jmp Main                # Execute main program
 
 
 # sample linked list
 .align 4
 ele1:
-        .long 0x00a
-        .long ele2
+	.long 0x00a
+	.long ele2
 ele2:
-        .long 0x0b0     
-        .long ele3
+	.long 0x0b0     
+	.long ele3
 ele3:
-        .long 0xc00
-        .long 0
+	.long 0xc00
+	.long 0
 
 
 
 Main:   
 	irmovl ele1,%edx
-        pushl %edx      # ptr to linked list
-        call rsum_list
-        halt
+	pushl %edx      # ptr to linked list
+	call rsum_list
+	halt
 
 rsum_list:	
 	pushl %ebp
